@@ -1,0 +1,185 @@
+{
+  "users": [
+    {
+      "id": "user-admin-1",
+      "name": "Главный Администратор",
+      "email": "admin@trion.edu",
+      "password": "$2b$10$m4iuClP1aBXxzV0mUvY7c.Lz5tvJd.R/wP8pc9E8aYPXAeYdhF61S",
+      "role": "admin",
+      "createdAt": "2026-09-29T05:07:05.477Z"
+    },
+    {
+      "id": "user-teacher-1",
+      "name": "Алексей Смирнов (Senior FullStack)",
+      "email": "teacher@trion.edu",
+      "password": "$2b$10$m4iuClP1aBXxzV0mUvY7c.oqz9KlKI5/7P4czHcAGcjzlFqTkIuou",
+      "role": "teacher",
+      "bio": "10+ лет коммерческого опыта в Node.js, React, Cloud Architecture.",
+      "createdAt": "2026-09-29T05:07:05.478Z"
+    },
+    {
+      "id": "user-student-1",
+      "name": "Данияр Бекенов (Студент)",
+      "email": "student@trion.edu",
+      "password": "$2b$10$m4iuClP1aBXxzV0mUvY7c.Jwppix5O23vrW9vSGBcxQdz/QW2eYTW",
+      "role": "teacher",
+      "createdAt": "2026-09-29T05:07:05.478Z"
+    },
+    {
+      "id": "user-61c3d89b",
+      "name": "student1",
+      "email": "student1@gmail.com",
+      "password": "$2b$10$tfxcH6i/MUD3bIwW44RysO6q9HtWiz2iXnSRDItu/AftKeMi2Oqdy",
+      "role": "student",
+      "createdAt": "2026-09-29T06:22:30.597Z"
+    },
+    {
+      "id": "user-34877481",
+      "name": "Jomart",
+      "email": "aldabaizhomart@gmail.com",
+      "password": "$2b$10$3.wgvPwCc8mJo9YINEPCb.6dghRKs6nqkKv6BgabCTNR7fFAeSaR2",
+      "role": "student",
+      "createdAt": "2026-09-30T11:20:58.188Z"
+    },
+    {
+      "id": "user-9c492333",
+      "name": "Jomart",
+      "email": "jomart@gmail.com",
+      "password": "$2b$10$mL8WGMYf9YLyGS5AbiUeTuobRD9pV6Wvddfk/i8rP9m78esglDGui",
+      "role": "student",
+      "createdAt": "2026-09-30T11:21:13.635Z"
+    }
+  ],
+  "courses": [
+    {
+      "id": "course-fullstack-node",
+      "title": "Full-Stack Веб-Разработка на Node.js & Современный Web",
+      "description": "Комплексный курс по разработке масштабируемых веб-приложений с использованием Node.js, Express, защищенных API, баз данных и чистого фронтенда.",
+      "authorId": "user-teacher-1",
+      "authorName": "Алексей Смирнов (Senior FullStack)",
+      "category": "Backend & FullStack",
+      "level": "С нуля до PRO",
+      "duration": "24 академических часа",
+      "thumbnail": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=80",
+      "createdAt": "2026-09-29T05:07:05.478Z"
+    },
+    {
+      "id": "course-frontend-ui",
+      "title": "1 Frontend разработка и UI/UX интерфейсы",
+      "description": "Изучите HTML5, современный адаптивный CSS, анимации, стилизацию в цветах Orange & Black и основы интерактивного JavaScript.",
+      "authorId": "user-teacher-1",
+      "authorName": "Алексей Смирнов (Senior FullStack)",
+      "category": "Frontend & UI Design",
+      "level": "Для начинающих",
+      "duration": "18 академических часов",
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwv5Fxs_Aodf7XR-Flncwzq2J9uMPsOLYhfIhXfY4LMw&s=10",
+      "createdAt": "2026-09-29T05:07:05.484Z"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "lesson-fs-1",
+      "courseId": "course-fullstack-node",
+      "title": "Урок 1: Введение в экосистему Node.js и архитектуру веба",
+      "description": "Разбираем как устроен современный интернет, работу движка V8, Event Loop и запуск первого сервера.",
+      "order": 1,
+      "durationMinutes": 15,
+      "videoUrl": "https://youtube.com/shorts/vLpVCVKySCE?feature=share",
+      "theory": "\n# 🚀 Урок 1: Введение в Node.js и Архитектуру Веба\n\nДобро пожаловать на курс! В этом уроке мы заложим фундаментальную базу для понимания того, как работают серверные веб-приложения.\n\n---\n\n### 📌 1. Что такое Node.js?\n**Node.js** — это среда выполнения JavaScript, построенная на движке Chrome V8. Она позволяет исполнять JavaScript вне браузера — на сервере, в терминале и в облачных микросервисах.\n\n#### Ключевые преимущества:\n1. **Асинхронность и неблокирующий I/O**: операции чтения файлов, сетевых запросов и запросов к БД выполняются без заморозки главного потока.\n2. **Один язык на клиенте и сервере**: единый синтаксис JavaScript/TypeScript позволяет переиспользовать код валидации и типы данных.\n3. **Огромная экосистема npm**: миллионы готовых пакетов и библиотек.\n\n---\n\n### 💻 2. Пример простейшего HTTP сервера на Node.js\n\n```javascript\nconst http = require('http');\n\nconst server = http.createServer((req, res) => {\n  res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });\n  res.end(JSON.stringify({\n    message: \"Добро пожаловать в Trion Academy!\",\n    status: \"ok\",\n    timestamp: new Date().toISOString()\n  }));\n});\n\nconst PORT = 3000;\nserver.listen(PORT, () => {\n  console.log(`Сервер успешно запущен на порту http://localhost:${PORT}`);\n});\n```\n\n---\n\n### 🛡️ 3. Защита видеоматериалов курса\nНа нашем портале внедрена интеллектуальная система анти-пропуска:\n* Плеер запрещает перескакивать вперед непросмотренные сегменты лекции.\n* Доступна функция быстрого повтора: **кнопка «- 5 сек»**.\n* Завершение урока засчитывается после просмотра видеоматериала и закрепления теории.\n",
+      "youtubeId": "vLpVCVKySCE",
+      "createdAt": "2026-09-29T05:07:05.478Z"
+    },
+    {
+      "id": "lesson-fs-2",
+      "courseId": "course-fullstack-node",
+      "title": "Урок 2: REST API, Маршрутизация в Express и Middleware",
+      "description": "Создание чистого REST API, обработка параметров маршрутов, валидация запросов и использование связующего ПО (Middleware).",
+      "order": 2,
+      "durationMinutes": 20,
+      "videoUrl": "https://youtube.com/shorts/vLpVCVKySCE?feature=share",
+      "theory": "\n# 🛠️ Урок 2: Создание REST API на Express\n\nВ этом уроке мы разберем проектирование надежного API и принципы взаимодействия клиентской и серверной частей.\n\n### 📋 Архитектурные принципы REST:\n1. **Идемпотентность методов**: `GET`, `PUT`, `DELETE` должны быть предсказуемы.\n2. **Использование правильных HTTP-статусов**:\n   * `200 OK` — успешный запрос.\n   * `201 Created` — ресурс успешно создан.\n   * `400 Bad Request` — ошибка валидации входных данных.\n   * `401 Unauthorized` — пользователь не авторизован.\n   * `403 Forbidden` — недостаточно прав (например, ученик пытается зайти в панель учителя).\n   * `404 Not Found` — ресурс не найден.\n\n### 💡 Пример структуры Middleware авторизации:\n```javascript\nfunction ensureRole(requiredRole) {\n  return (req, res, next) => {\n    if (!req.session || !req.session.user) {\n      return res.redirect('/login');\n    }\n    if (req.session.user.role !== requiredRole && req.session.user.role !== 'admin') {\n      return res.status(403).render('error', { message: 'Доступ ограничен!' });\n    }\n    next();\n  };\n}\n```\n",
+      "youtubeId": "vLpVCVKySCE",
+      "createdAt": "2026-09-29T05:07:05.484Z"
+    },
+    {
+      "id": "lesson-fe-1",
+      "courseId": "course-frontend-ui",
+      "title": "Урок 1: Цветовая палитра Black & Orange и верстка адаптивных сеток",
+      "description": "Разбор контрастности, типографики и построения красивых карточек курсов с оранжевыми акцентами.",
+      "order": 1,
+      "durationMinutes": 12,
+      "videoUrl": "https://youtube.com/shorts/vLpVCVKySCE?feature=share",
+      "theory": "\n# 🎨 Урок 1: Фирменный стиль Black & Orange\n\nКонтрастное сочетание черного, белого и яркого оранжевого (`#FF6600`) создает энергичный и технологичный стиль образовательной платформы.\n\n### Основные токены дизайна:\n* **Background Light**: `#F8FAFC` (чистый, не утомляющий глаз фон)\n* **Dark Surfaces**: `#0F172A` и `#18181B` (контрастные панели, плеер и навигация)\n* **Primary Accent**: `#FF6600` (кнопки призыва к действию, статус прогресса, активные табы)\n* **Text**: Глубокий черный `#0F172A` на светлом фоне и белоснежный `#FFFFFF` на темном.\n",
+      "youtubeId": "vLpVCVKySCE",
+      "createdAt": "2026-09-29T05:07:05.489Z"
+    },
+    {
+      "id": "lesson-686a2d85",
+      "courseId": "course-frontend-ui",
+      "title": "Second lesson",
+      "description": "description of Second lesson",
+      "order": 2,
+      "videoUrl": "https://youtube.com/shorts/sKqCgKdChJg?feature=share",
+      "youtubeId": "sKqCgKdChJg",
+      "durationMinutes": 10,
+      "theory": "description of Second lesson description of Second lesson description of Second lesson description of Second lesson description of Second lesson description of Second lesson description of Second lesson description of Second lesson description of Second lesson",
+      "createdAt": "2026-09-29T06:29:35.092Z"
+    }
+  ],
+  "progress": [
+    {
+      "id": "user-admin-1_lesson-fs-1",
+      "userId": "user-admin-1",
+      "lessonId": "lesson-fs-1",
+      "courseId": "course-fullstack-node",
+      "completed": false,
+      "watchedSeconds": 11,
+      "updatedAt": "2026-09-29T05:18:59.030Z"
+    },
+    {
+      "id": "user-admin-1_lesson-fs-2",
+      "userId": "user-admin-1",
+      "lessonId": "lesson-fs-2",
+      "courseId": "course-fullstack-node",
+      "completed": false,
+      "watchedSeconds": 0,
+      "updatedAt": "2026-09-29T06:11:17.287Z"
+    },
+    {
+      "id": "user-61c3d89b_lesson-fe-1",
+      "userId": "user-61c3d89b",
+      "lessonId": "lesson-fe-1",
+      "courseId": "course-frontend-ui",
+      "completed": false,
+      "watchedSeconds": 9999,
+      "updatedAt": "2026-09-29T06:24:17.897Z"
+    },
+    {
+      "id": "user-admin-1_lesson-fe-1",
+      "userId": "user-admin-1",
+      "lessonId": "lesson-fe-1",
+      "courseId": "course-frontend-ui",
+      "completed": false,
+      "watchedSeconds": 0,
+      "updatedAt": "2026-09-29T06:25:04.971Z"
+    },
+    {
+      "id": "user-61c3d89b_lesson-686a2d85",
+      "userId": "user-61c3d89b",
+      "lessonId": "lesson-686a2d85",
+      "courseId": "course-frontend-ui",
+      "completed": false,
+      "watchedSeconds": 2,
+      "updatedAt": "2026-09-29T06:36:35.643Z"
+    },
+    {
+      "id": "user-9c492333_lesson-fs-1",
+      "userId": "user-9c492333",
+      "lessonId": "lesson-fs-1",
+      "courseId": "course-fullstack-node",
+      "completed": true,
+      "watchedSeconds": 16,
+      "updatedAt": "2026-09-30T11:23:41.304Z"
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+<%- include('partials/header', { title: title }) %>
+<%- include('partials/navbar') %>
+
+<main class="flex-grow py-10 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Course Banner / Header -->
+    <div class="bg-dark-950 text-white rounded-3xl p-8 sm:p-12 mb-10 border border-dark-700 relative overflow-hidden shadow-2xl">
+      <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-orange-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-3xl">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-lg uppercase tracking-wide">
+            <%= course.category %>
+          </span>
+          <span class="bg-dark-800 text-zinc-300 text-xs px-3 py-1 rounded-lg border border-dark-700">
+            <i class="fa-solid fa-signal text-orange-400 mr-1"></i> <%= course.level %>
+          </span>
+          <span class="bg-dark-800 text-zinc-300 text-xs px-3 py-1 rounded-lg border border-dark-700">
+            <i class="fa-solid fa-clock text-orange-400 mr-1"></i> <%= course.duration %>
+          </span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 leading-tight">
+          <%= course.title %>
+        </h1>
+
+        <p class="text-sm sm:text-base text-zinc-300 leading-relaxed mb-8">
+          <%= course.description %>
+        </p>
+
+        <div class="flex flex-wrap items-center gap-6">
+          <% if (lessons.length > 0) { %>
+            <a href="/lessons/<%= lessons[0].id %>" class="bg-orange-600 hover:bg-orange-500 text-white font-bold px-7 py-3 rounded-xl shadow-lg shadow-orange-600/30 transition flex items-center gap-2">
+              <i class="fa-solid fa-play text-sm"></i>
+              <span>Начать обучение</span>
+            </a>
+          <% } else { %>
+            <span class="text-xs text-zinc-500">Уроки готовятся к публикации</span>
+          <% } %>
+
+          <div class="flex items-center gap-3 text-xs text-zinc-400">
+            <div class="w-8 h-8 rounded-full bg-dark-800 border border-dark-700 flex items-center justify-center text-white font-bold">
+              <%= course.authorName ? course.authorName.charAt(0) : 'T' %>
+            </div>
+            <div>
+              <div class="text-zinc-500 text-[10px]">Преподаватель курса</div>
+              <div class="text-white font-semibold"><%= course.authorName %></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Syllabus & Lessons List -->
+    <div class="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm">
+      <div class="flex items-center justify-between mb-8 pb-5 border-b border-zinc-100">
+        <div>
+          <h2 class="text-xl font-bold text-zinc-900 tracking-tight">Программа курса</h2>
+          <p class="text-xs text-zinc-500 mt-1">Всего уроков: <%= lessons.length %></p>
+        </div>
+        <div class="text-xs text-zinc-500 flex items-center gap-4">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-book-open text-orange-500"></i> Теория</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-video text-orange-500"></i> Anti-Skip Видео</span>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <% if (lessons.length === 0) { %>
+          <div class="text-center py-12 text-zinc-400 text-sm">
+            <i class="fa-regular fa-folder-open text-3xl mb-2 block"></i>
+            Преподаватель еще не добавил уроки в этот курс.
+          </div>
+        <% } %>
+
+        <% lessons.forEach((lesson, index) => { %>
+          <% const isCompleted = completedLessonIds.has(lesson.id); %>
+          <div class="p-5 rounded-2xl border <%= isCompleted ? 'border-green-200 bg-green-50/20' : 'border-zinc-200 hover:border-orange-300' %> transition flex flex-col md:flex-row md:items-center justify-between gap-4">
+            
+            <div class="flex items-start gap-4">
+              <!-- Number badge -->
+              <div class="w-10 h-10 rounded-xl <%= isCompleted ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-zinc-700' %> flex-shrink-0 flex items-center justify-center font-bold text-sm font-mono">
+                <% if (isCompleted) { %>
+                  <i class="fa-solid fa-check"></i>
+                <% } else { %>
+                  <%= (lesson.order || index + 1).toString().padStart(2, '0') %>
+                <% } %>
+              </div>
+
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-sm font-bold text-zinc-900">
+                    <%= lesson.title %>
+                  </h3>
+                  <% if (isCompleted) { %>
+                    <span class="text-[10px] font-semibold text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
+                      Пройден
+                    </span>
+                  <% } %>
+                </div>
+
+                <p class="text-xs text-zinc-500 line-clamp-1 mb-2">
+                  <%= lesson.description || 'Изучите теоретические материалы и просмотрите видеоурок.' %>
+                </p>
+
+                <div class="flex items-center gap-3 text-[11px] text-zinc-400">
+                  <% if (lesson.youtubeId) { %>
+                    <span class="flex items-center gap-1 text-orange-600 font-medium">
+                      <i class="fa-solid fa-play-circle"></i> Видеоурок
+                    </span>
+                  <% } %>
+                  <% if (lesson.theory) { %>
+                    <span class="flex items-center gap-1 text-zinc-600">
+                      <i class="fa-solid fa-file-lines"></i> Конспект теории
+                    </span>
+                  <% } %>
+                  <span class="flex items-center gap-1">
+                    <i class="fa-regular fa-clock"></i> ~<%= lesson.durationMinutes || 15 %> мин
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-shrink-0 flex items-center gap-3">
+              <a href="/lessons/<%= lesson.id %>" class="w-full md:w-auto text-center px-4 py-2.5 rounded-xl text-xs font-bold <%= isCompleted ? 'bg-zinc-100 hover:bg-zinc-200 text-zinc-700' : 'bg-orange-600 hover:bg-orange-500 text-white' %> transition flex items-center justify-center gap-2">
+                <span><%= isCompleted ? 'Повторить' : 'Открыть урок' %></span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+
+          </div>
+        <% }) %>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<%- include('partials/footer') %>

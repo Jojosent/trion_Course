@@ -1,0 +1,274 @@
+/* =========================================================
+   TRION ACADEMY - MODERN ORANGE, BLACK & WHITE THEME
+   ========================================================= */
+
+:root {
+  --primary-orange: #FF6600;
+  --primary-orange-hover: #E65C00;
+  --primary-orange-light: #FFF0E6;
+  --dark-bg: #09090B;
+  --dark-card: #121217;
+  --dark-border: #27272A;
+  --light-bg: #FFFFFF;
+  --light-surface: #F8FAFC;
+  --text-dark: #0F172A;
+  --text-muted: #64748B;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--light-surface);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-orange);
+}
+
+/* Accent Glowing elements */
+.orange-glow {
+  box-shadow: 0 0 25px rgba(255, 102, 0, 0.25);
+}
+.orange-glow-sm {
+  box-shadow: 0 0 12px rgba(255, 102, 0, 0.2);
+}
+
+/* Card hover animation */
+.hover-lift {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 102, 0, 0.2);
+}
+
+/* =========================================================
+   CUSTOM VIDEO PLAYER & ANTI-SKIP SHIELDS
+   ========================================================= */
+
+.trion-player-container {
+  position: relative;
+  width: 100%;
+  background: #000000;
+  border-radius: 1rem;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.5);
+  border: 1px solid #27272A;
+}
+
+/* YouTube Iframe embedding */
+.trion-video-frame {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* User cannot directly click YouTube iframe elements */
+}
+
+/* Top Shield: blocks YouTube video title, share button, and "Watch Later" */
+.player-shield-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75px;
+  z-index: 15;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+  pointer-events: auto; /* Intercepts all clicks on the header */
+}
+
+/* Bottom-right shield: hides/blocks YouTube logo watermark */
+.player-shield-bottom-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 130px;
+  height: 70px;
+  z-index: 15;
+  pointer-events: auto;
+  background: transparent;
+}
+
+/* Big Central Play/Pause Click Overlay */
+.player-click-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.big-play-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255, 102, 0, 0.9);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 0 30px rgba(255, 102, 0, 0.6);
+  transition: transform 0.2s ease, opacity 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+.player-click-overlay:hover .big-play-btn {
+  transform: scale(1.1);
+  background: rgba(255, 102, 0, 1);
+}
+
+.big-play-btn.playing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Toast warning notification */
+.player-toast {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: rgba(18, 18, 23, 0.95);
+  border: 1px solid #FF6600;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.player-toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Strict No-Skip Progress Bar */
+.no-skip-progress-track {
+  width: 100%;
+  background: #27272A;
+  height: 8px;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+  cursor: not-allowed !important;
+}
+
+.no-skip-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #FF6600 0%, #FF8C38 100%);
+  border-radius: 9999px;
+  transition: width 0.25s linear;
+  width: 0%;
+}
+
+/* Rewind button pulse animation */
+.btn-rewind:active {
+  transform: scale(0.92);
+  filter: brightness(1.2);
+}
+
+/* =========================================================
+   THEORY CONTENT STYLES (MARKDOWN)
+   ========================================================= */
+
+.theory-prose {
+  color: #1E293B;
+  line-height: 1.75;
+}
+
+.theory-prose h1, .theory-prose h2, .theory-prose h3 {
+  color: #0F172A;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.theory-prose h1 {
+  font-size: 1.875rem;
+  border-bottom: 2px solid #FF6600;
+  padding-bottom: 0.5rem;
+}
+
+.theory-prose h2 {
+  font-size: 1.5rem;
+}
+
+.theory-prose h3 {
+  font-size: 1.25rem;
+}
+
+.theory-prose p {
+  margin-bottom: 1rem;
+}
+
+.theory-prose ul, .theory-prose ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.theory-prose li {
+  margin-bottom: 0.4rem;
+}
+
+.theory-prose pre {
+  background: #09090B;
+  color: #F8FAFC;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+  border: 1px solid #27272A;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9rem;
+}
+
+.theory-prose code {
+  background: #F1F5F9;
+  color: #EA580C;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.35rem;
+  font-size: 0.875em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.theory-prose pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.theory-prose hr {
+  border-color: #E2E8F0;
+  margin: 1.5rem 0;
+}

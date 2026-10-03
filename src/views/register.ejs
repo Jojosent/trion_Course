@@ -1,0 +1,75 @@
+<%- include('partials/header', { title: title || 'Регистрация' }) %>
+<%- include('partials/navbar') %>
+
+<main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+  <div class="max-w-md w-full">
+    
+    <div class="text-center mb-8">
+      <div class="w-12 h-12 rounded-2xl bg-orange-600 mx-auto flex items-center justify-center text-white font-extrabold text-2xl shadow-lg shadow-orange-600/30 mb-4">
+        T
+      </div>
+      <h2 class="text-2xl font-extrabold text-zinc-900 tracking-tight">Создание аккаунта</h2>
+      <p class="text-xs text-zinc-500 mt-1">Присоединяйтесь к платформе разработки Trion</p>
+    </div>
+
+    <div class="bg-white p-8 rounded-2xl border border-zinc-200 shadow-xl">
+      <% if (error) { %>
+        <div class="mb-5 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+          <i class="fa-solid fa-triangle-exclamation text-sm"></i>
+          <span><%= error %></span>
+        </div>
+      <% } %>
+
+      <form action="/register" method="POST" class="space-y-4">
+        
+        <div>
+          <label for="name" class="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">Ваше Имя и Фамилия</label>
+          <input type="text" id="name" name="name" required value="<%= formData && formData.name ? formData.name : '' %>" placeholder="Иван Иванов"
+                 class="block w-full px-3.5 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 placeholder-zinc-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+        </div>
+
+        <div>
+          <label for="email" class="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">Email адрес</label>
+          <input type="email" id="email" name="email" required value="<%= formData && formData.email ? formData.email : '' %>" placeholder="name@example.com"
+                 class="block w-full px-3.5 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 placeholder-zinc-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+        </div>
+
+        <div>
+          <label for="role" class="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">Желаемая роль</label>
+          <select id="role" name="role" class="block w-full px-3.5 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+            <option value="student" <%= (!formData || formData.role === 'student') ? 'selected' : '' %>>Ученик (доступ к урокам, конспектам и видео)</option>
+            <option value="teacher" <%= (formData && formData.role === 'teacher') ? 'selected' : '' %>>Преподаватель (создание курсов и добавление видео)</option>
+          </select>
+          <p class="text-[10px] text-zinc-400 mt-1">Роль администратора выдается только через админ-панель /admin</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="password" class="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">Пароль</label>
+            <input type="password" id="password" name="password" required placeholder="••••••••"
+                   class="block w-full px-3.5 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 placeholder-zinc-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+          </div>
+          <div>
+            <label for="confirmPassword" class="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">Повтор пароля</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="••••••••"
+                   class="block w-full px-3.5 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 placeholder-zinc-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg shadow-orange-600/30 transition active:scale-95 flex items-center justify-center gap-2 mt-4">
+          <span>Зарегистрироваться</span>
+          <i class="fa-solid fa-arrow-right text-[11px]"></i>
+        </button>
+      </form>
+
+      <div class="mt-5 text-center text-xs text-zinc-500">
+        Уже есть аккаунт? 
+        <a href="/login" class="text-orange-600 font-bold hover:underline">Войти</a>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<%- include('partials/footer') %>

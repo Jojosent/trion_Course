@@ -1,0 +1,89 @@
+<%- include('partials/header', { title: title || 'Вход в аккаунт' }) %>
+<%- include('partials/navbar') %>
+
+<main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+  <div class="max-w-md w-full">
+    
+    <div class="text-center mb-8">
+      <div class="w-12 h-12 rounded-2xl bg-orange-600 mx-auto flex items-center justify-center text-white font-extrabold text-2xl shadow-lg shadow-orange-600/30 mb-4">
+        T
+      </div>
+      <h2 class="text-2xl font-extrabold text-zinc-900 tracking-tight">Вход в систему</h2>
+      <p class="text-xs text-zinc-500 mt-1">Войдите в личный кабинет Trion Academy</p>
+    </div>
+
+    <div class="bg-white p-8 rounded-2xl border border-zinc-200 shadow-xl">
+      <% if (error) { %>
+        <div class="mb-5 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+          <i class="fa-solid fa-triangle-exclamation text-sm"></i>
+          <span><%= error %></span>
+        </div>
+      <% } %>
+
+      <form action="/login" method="POST" class="space-y-4">
+        <input type="hidden" name="redirect" value="<%= redirect || '' %>">
+
+        <div>
+          <label for="email" class="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">Email адрес</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
+              <i class="fa-regular fa-envelope text-xs"></i>
+            </div>
+            <input type="email" id="email" name="email" required placeholder="name@example.com"
+                   class="block w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 placeholder-zinc-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+          </div>
+        </div>
+
+        <div>
+          <label for="password" class="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">Пароль</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
+              <i class="fa-solid fa-lock text-xs"></i>
+            </div>
+            <input type="password" id="password" name="password" required placeholder="••••••••"
+                   class="block w-full pl-10 pr-3.5 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 placeholder-zinc-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg shadow-orange-600/30 transition active:scale-95 flex items-center justify-center gap-2">
+          <span>Войти</span>
+          <i class="fa-solid fa-arrow-right text-[11px]"></i>
+        </button>
+      </form>
+
+      <!-- Quick Demo Account Fillers -->
+      <div class="mt-6 pt-5 border-t border-zinc-100">
+        <div class="text-[11px] font-bold text-zinc-500 uppercase tracking-wider mb-2 text-center">
+          Быстрый вход для проверки ролей:
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" onclick="fillAuth('admin@trion.edu', 'admin123')" class="bg-dark-950 hover:bg-dark-800 text-white text-[10px] font-bold py-1.5 px-2 rounded-lg border border-dark-700 transition">
+            <i class="fa-solid fa-shield text-orange-500"></i> Админ
+          </button>
+          <button type="button" onclick="fillAuth('teacher@trion.edu', 'teacher123')" class="bg-dark-900 hover:bg-dark-800 text-amber-400 text-[10px] font-bold py-1.5 px-2 rounded-lg border border-dark-700 transition">
+            <i class="fa-solid fa-chalkboard-user"></i> Учитель
+          </button>
+          <button type="button" onclick="fillAuth('student@trion.edu', 'student123')" class="bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-[10px] font-bold py-1.5 px-2 rounded-lg border border-zinc-300 transition">
+            <i class="fa-solid fa-user"></i> Ученик
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-5 text-center text-xs text-zinc-500">
+        Еще нет аккаунта? 
+        <a href="/register" class="text-orange-600 font-bold hover:underline">Зарегистрироваться</a>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<script>
+  function fillAuth(email, pass) {
+    document.getElementById('email').value = email;
+    document.getElementById('password').value = pass;
+  }
+</script>
+
+<%- include('partials/footer') %>

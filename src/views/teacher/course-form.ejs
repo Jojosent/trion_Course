@@ -1,0 +1,153 @@
+<%- include('../partials/header', { title: title }) %>
+<%- include('../partials/navbar') %>
+
+<main class="flex-grow py-10 bg-slate-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex items-center justify-between pb-6 mb-8 border-b border-zinc-200">
+      <div>
+        <a href="/teacher" class="text-xs text-zinc-500 hover:text-orange-600 transition flex items-center gap-1.5 mb-2">
+          <i class="fa-solid fa-arrow-left"></i> Назад в панель преподавателя
+        </a>
+        <h1 class="text-2xl font-extrabold text-zinc-900 tracking-tight">
+          <%= course && course.id ? 'Редактирование курса' : 'Создание нового курса' %>
+        </h1>
+      </div>
+
+      <% if (course && course.id) { %>
+        <form action="/teacher/courses/<%= course.id %>/delete" method="POST" onsubmit="return confirm('Вы уверены, что хотите удалить этот курс и все связанные уроки?');">
+          <button type="submit" class="text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 px-3.5 py-2 rounded-xl transition">
+            <i class="fa-solid fa-trash-can mr-1"></i> Удалить курс
+          </button>
+        </form>
+      <% } %>
+    </div>
+
+    <% if (error) { %>
+      <div class="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span><%= error %></span>
+      </div>
+    <% } %>
+
+    <!-- Course Info Form -->
+    <div class="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm mb-10">
+      <form action="<%= course && course.id ? `/teacher/courses/${course.id}/edit` : '/teacher/courses' %>" method="POST" class="space-y-6">
+        
+        <div>
+          <label for="title" class="block text-xs font-bold uppercase tracking-wider text-zinc-700 mb-1.5">Название курса</label>
+          <input type="text" id="title" name="title" required value="<%= course ? course.title : '' %>" placeholder="Например: Full-Stack Веб-Разработка на Node.js"
+                 class="block w-full px-4 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+        </div>
+
+        <div>
+          <label for="description" class="block text-xs font-bold uppercase tracking-wider text-zinc-700 mb-1.5">Описание курса</label>
+          <textarea id="description" name="description" rows="3" required placeholder="Краткое описание целей и программы курса..."
+                    class="block w-full px-4 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition"><%= course ? course.description : '' %></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label for="category" class="block text-xs font-bold uppercase tracking-wider text-zinc-700 mb-1.5">Категория</label>
+            <input type="text" id="category" name="category" value="<%= course ? course.category : 'Web Development' %>" placeholder="Web Development"
+                   class="block w-full px-4 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+          </div>
+
+          <div>
+            <label for="level" class="block text-xs font-bold uppercase tracking-wider text-zinc-700 mb-1.5">Сложность</label>
+            <select id="level" name="level" class="block w-full px-4 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+              <option value="Для начинающих" <%= course && course.level === 'Для начинающих' ? 'selected' : '' %>>Для начинающих</option>
+              <option value="С нуля до PRO" <%= (!course || course.level === 'С нуля до PRO') ? 'selected' : '' %>>С нуля до PRO</option>
+              <option value="Продвинутый уровень" <%= course && course.level === 'Продвинутый уровень' ? 'selected' : '' %>>Продвинутый уровень</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="duration" class="block text-xs font-bold uppercase tracking-wider text-zinc-700 mb-1.5">Длительность</label>
+            <input type="text" id="duration" name="duration" value="<%= course ? course.duration : '20 академических часов' %>" placeholder="20 академических часов"
+                   class="block w-full px-4 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+          </div>
+        </div>
+
+        <div>
+          <label for="thumbnail" class="block text-xs font-bold uppercase tracking-wider text-zinc-700 mb-1.5">Ссылка на обложку (Thumbnail URL)</label>
+          <input type="url" id="thumbnail" name="thumbnail" value="<%= course ? course.thumbnail : 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=80' %>" placeholder="https://..."
+                 class="block w-full px-4 py-2.5 bg-slate-50 border border-zinc-300 rounded-xl text-xs text-zinc-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition">
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-zinc-100">
+          <a href="/teacher" class="px-5 py-2.5 rounded-xl text-xs font-semibold text-zinc-600 hover:bg-zinc-100 transition">Отмена</a>
+          <button type="submit" class="bg-orange-600 hover:bg-orange-500 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-lg shadow-orange-600/30 transition">
+            <%= course && course.id ? 'Сохранить изменения' : 'Создать курс' %>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Lessons Management Section (Only in Edit mode) -->
+    <% if (course && course.id) { %>
+      <div class="bg-white rounded-3xl p-8 border border-zinc-200 shadow-sm">
+        <div class="flex items-center justify-between pb-4 mb-6 border-b border-zinc-100">
+          <div>
+            <h2 class="text-lg font-bold text-zinc-900">Уроки этого курса</h2>
+            <p class="text-xs text-zinc-500">Добавляйте видеоуроки с YouTube и теоретические конспекты</p>
+          </div>
+
+          <a href="/teacher/courses/<%= course.id %>/lessons/new" class="bg-orange-600 hover:bg-orange-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-1.5">
+            <i class="fa-solid fa-plus text-[10px]"></i>
+            <span>Добавить урок</span>
+          </a>
+        </div>
+
+        <div class="space-y-3">
+          <% if (!lessons || lessons.length === 0) { %>
+            <div class="text-center py-8 text-zinc-400 text-xs">
+              В этом курсе пока нет добавленных уроков. Нажмите «Добавить урок» выше.
+            </div>
+          <% } %>
+
+          <% (lessons || []).forEach((l, idx) => { %>
+            <div class="p-4 rounded-xl border border-zinc-200 flex items-center justify-between gap-4 hover:border-zinc-300 transition">
+              <div class="flex items-center gap-3">
+                <span class="w-7 h-7 rounded-lg bg-slate-100 text-zinc-700 flex items-center justify-center font-bold text-xs font-mono">
+                  <%= l.order || idx + 1 %>
+                </span>
+                <div>
+                  <div class="text-xs font-bold text-zinc-900"><%= l.title %></div>
+                  <div class="text-[10px] text-zinc-400 flex items-center gap-2 mt-0.5">
+                    <% if (l.youtubeId) { %>
+                      <span class="text-orange-600 font-semibold"><i class="fa-brands fa-youtube mr-1"></i> ID: <%= l.youtubeId %></span>
+                    <% } else { %>
+                      <span class="text-zinc-400">Без видео</span>
+                    <% } %>
+                    <span>&bull;</span>
+                    <span>~<%= l.durationMinutes || 10 %> мин</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <a href="/lessons/<%= l.id %>" target="_blank" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-zinc-100 hover:bg-zinc-200 text-zinc-700 transition" title="Открыть плеер урока">
+                  <i class="fa-solid fa-eye"></i>
+                </a>
+                <a href="/teacher/lessons/<%= l.id %>/edit" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-dark-900 hover:bg-dark-800 text-white transition">
+                  <i class="fa-solid fa-pen text-[10px] mr-1"></i> Правка
+                </a>
+                <form action="/teacher/lessons/<%= l.id %>/delete" method="POST" onsubmit="return confirm('Удалить этот урок?');" class="inline">
+                  <button type="submit" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-red-600 hover:bg-red-50 transition" title="Удалить урок">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+
+      </div>
+    <% } %>
+
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

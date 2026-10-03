@@ -1,0 +1,24 @@
+{
+  "name": "trion_trion_course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^18.0.4",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "firebase-admin": "^14.5.0",
+    "marked": "^18.0.14",
+    "sanitize-html": "^2.17.7",
+    "uuid": "^14.0.2"
+  }
+}
